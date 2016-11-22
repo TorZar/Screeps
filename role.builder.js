@@ -1,3 +1,4 @@
+/* testing git */
 var varConstants = require('var.constants');
 var roleBuilder = {
 
@@ -35,8 +36,8 @@ var roleBuilder = {
         /* var targetsRepair = creep.room.find(FIND_STRUCTURES, {
             filter: object => object.hits < object.hitsMax
         });*/
-        
-        
+
+
         var targetsRepair = creep.room.find(FIND_STRUCTURES, {
             filter: object => object.hits < object.hitsMax
         });
