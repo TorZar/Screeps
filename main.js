@@ -2,6 +2,8 @@ var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder')
 
+console.log('TorZar')
+
 module.exports.loop = function() {
     var varConstants = '';
     var varConstants = require('var.constants');
