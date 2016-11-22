@@ -32,6 +32,11 @@ var roleBuilder = {
 
 
         /*      ####    TESTING REPAIR FEATURE      ####    START    */
+        /* var targetsRepair = creep.room.find(FIND_STRUCTURES, {
+            filter: object => object.hits < object.hitsMax
+        });*/
+        
+        
         var targetsRepair = creep.room.find(FIND_STRUCTURES, {
             filter: object => object.hits < object.hitsMax
         });
