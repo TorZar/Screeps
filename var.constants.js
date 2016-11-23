@@ -1,4 +1,4 @@
-/* testing git - ONE MORE TRY - (I lied, we're still going) */
+/* testing git - ONE MORE TRY - (I lied, we're still doin it */
 
 var varCons = {
 
