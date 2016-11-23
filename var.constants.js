@@ -1,5 +1,3 @@
-/* testing git - ONE MORE TRY - (I lied, we're still doin it... and again... and again... and again...) */
-
 var varCons = {
 
 
