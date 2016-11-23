@@ -3,15 +3,13 @@ var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var varConstants = require('var.constants');
 
-
 module.exports.loop = function() {
 
-    var _allEnergyAvailable = Game.spawns['Spawn1'].energyAvailable
-
+   Memory._allEnergy = {
+        _allEnergy: Room.energy
+    }
+    
     var spawnEnergy = Game.spawns['Spawn1'].energy
-
-    /*      console.log(Room.energyAvailable + '/' + Game.spawns['Spawn1'].energyCapacity)      */
-    /*      && Game.spawns['Spawn1'].energy === Game.spawns['Spawn1'].energyCapacity            */
 
     for (var name in Memory.creeps) {
         if (!Game.creeps[name]) {
@@ -26,52 +24,51 @@ module.exports.loop = function() {
 
     if (harvesters.length < varConstants.HARVESTER_MIN) {
 
-        var newName = Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, CARRY, MOVE, MOVE], undefined, {
+        var newName = Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE], 'HARVESTER_2_' + (Math.floor(Math.random() * 65534) + 1), {
             role: 'harvester'
         })
         console.log('Spawning new : ' + newName + ' The HARVESTER')
 
     } else {
 
-        if (upgraders.length < varConstants.UPGRADER_MIN) { /* && spawnEnergy === Game.spawns['Spawn1'].energyCapacity */
-            var newName = Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, CARRY, MOVE, MOVE], undefined, {
+        if (upgraders.length < varConstants.UPGRADER_MIN) { 
+            var newName = Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, CARRY, MOVE, MOVE], 'UPGRADER_' + (Math.floor(Math.random() * 65534) + 1), {
                 role: 'upgrader'
             })
             console.log('Spawning new : ' + newName + ' The UPGRADER')
         }
 
-        if (builders.length < varConstants.BUILDER_MIN) { /* && spawnEnergy === Game.spawns['Spawn1'].energyCapacity */
-            var newName = Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, CARRY, MOVE, MOVE], undefined, {
+        if (builders.length < varConstants.BUILDER_MIN) { 
+            var newName = Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, CARRY, MOVE, MOVE], 'BUILDER_' + (Math.floor(Math.random() * 65534) + 1), {
                 role: 'builder'
             })
             console.log('Spawning new : ' + newName + ' The BUILDER')
         }
     };
 
-
     /* LOG DISPLAY TIMER - START */
     if (!Memory.logTimer.toNextDisplay) {
         Memory.logTimer = {
             toNextDisplay: 5
         }
-        console.log('HARD SET LOG TIMER TO MEMEORY')
+        console.log('HARD-SET LOG TIMER TO MEMEORY')
     };
 
     if (Memory.logTimer.toNextDisplay === 1) {
 
-        console.log('<font color="green">Harvesters :  </font><font color="white"> ' + harvesters.length + ' / ' + varConstants.HARVESTER_MIN + '</font>' +
-            ' | ' + '<font color="orange">Upgraders :  </font><font color="white"> ' + upgraders.length + ' / ' + varConstants.UPGRADER_MIN + '</font>' +
-            ' | ' + '<font color="#464CC5">Builders :  </font><font color="white"> ' + builders.length + ' / ' + varConstants.BUILDER_MIN + '</font>' +
+        console.log('<font color="green">Harvesters :</font><font color="white"> ' + harvesters.length + ' / ' + varConstants.HARVESTER_MIN + '</font>' +
+            ' | ' + '<font color="orange">Upgraders :</font><font color="white"> ' + upgraders.length + ' / ' + varConstants.UPGRADER_MIN + '</font>' +
+            ' | ' + '<font color="#464CC5">Builders :</font><font color="white"> ' + builders.length + ' / ' + varConstants.BUILDER_MIN + '</font>' +
             ' | ' + '<font color="yellow">Spawn Energy :</font> ' + spawnEnergy + '/' + Game.spawns['Spawn1'].energyCapacity + 
+            ' | ' + 'All Energy : ' + Memory._allEnergy._allEnergy +
             ' | ' + 'Tick : ' + Game.time);
 
         Memory.logTimer.toNextDisplay = 6
         
     } else {
         var logCountdown = Memory.logTimer.toNextDisplay - 1
-        Memory.logTimer = {
-            toNextDisplay: logCountdown
-        }
+        Memory.logTimer.toNextDisplay = logCountdown
+        
     };
     /* DEBUG : console.log('Log Countdown : ' + Memory.logTimer.toNextDisplay) */
     /* LOG DISPLAY TIMER - END */

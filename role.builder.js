@@ -14,7 +14,7 @@ var roleBuilder = {
             creep.memory.building = true;
             creep.say('building');
         }
-
+        
         if (creep.memory.building) {
             var targets = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
 
@@ -32,30 +32,24 @@ var roleBuilder = {
 
 
         /*      ####    TESTING REPAIR FEATURE      ####    START    */
-        /* var targetsRepair = creep.room.find(FIND_STRUCTURES, {
-            filter: object => object.hits < object.hitsMax
-        });*/
-
-
+        
         var targetsRepair = creep.room.find(FIND_STRUCTURES, {
             filter: object => object.hits < object.hitsMax
         });
 
         targetsRepair.sort((a, b) => a.hits - b.hits);
-
+        
         var targetsBuild = creep.room.find(FIND_CONSTRUCTION_SITES);
 
         if (targetsRepair.length > 0 && targetsBuild.length < 1) {
             if (creep.repair(targetsRepair[0]) == ERR_NOT_IN_RANGE) {
 
-
+                creep.moveTo(targetsRepair[0]);
+                
                 if (varConstants.SPEAKABLE) {
                     creep.say('Repairing');
                 };
 
-
-
-                creep.moveTo(targetsRepair[0]);
             }
         }
         /*      ####    TESTING REPAIR FEATURE      ####    END    */

@@ -1,9 +1,9 @@
 var varCons = {
 
 
-    BUILDER_MIN: 5,
-    UPGRADER_MIN: 4,
-    HARVESTER_MIN: 4,
+    BUILDER_MIN: 3,
+    UPGRADER_MIN: 3,
+    HARVESTER_MIN: 5,
     SPEAKABLE: false
 };
 
