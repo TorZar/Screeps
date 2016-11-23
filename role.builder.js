@@ -1,4 +1,3 @@
-/* testing git - ONE MORE TRY */
 var varConstants = require('var.constants');
 var roleBuilder = {
 
