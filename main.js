@@ -5,6 +5,7 @@ var roleBuilder = require('role.builder');
 module.exports.loop = function() {
     var varConstants = '';
     var varConstants = require('var.constants');
+    var allEnergyAvailable = Game.spawns['Spawn1'].energyAvailable
 
     var spawnEnergy = Game.spawns['Spawn1'].energy
 
@@ -22,7 +23,7 @@ module.exports.loop = function() {
     var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader')
     var builders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder')
 
-    if (harvesters.length < varConstants.HARVESTER_MIN) { /* && spawnEnergy === Game.spawns['Spawn1'].energyCapacity */
+    if (harvesters.length < varConstants.HARVESTER_MIN) { 
 
         var newName = Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, CARRY, MOVE, MOVE], undefined, {
             role: 'harvester'
@@ -45,31 +46,40 @@ module.exports.loop = function() {
             console.log('Spawning new : ' + newName + ' The BUILDER')
         }
     };
-
-    console.log('Harvesters :  ' + harvesters.length + ' / ' + varConstants.HARVESTER_MIN)
-    console.log('Upgraders :  ' + upgraders.length + ' / ' + varConstants.UPGRADER_MIN)
-    console.log('Builders :  ' + builders.length + ' / ' + varConstants.BUILDER_MIN)
-    console.log('Spawn Energy : ' + spawnEnergy + '/' + Game.spawns['Spawn1'].energyCapacity + ' Total Energy : ' + Room.energyCapacity)
-
+    
+    
+    console.log('<font color="green">Harvesters :  </font><font color="white"> ' + harvesters.length + ' / ' + varConstants.HARVESTER_MIN + '</font>' +
+        ' | ' + '<font color="orange">Upgraders :  </font><font color="white"> ' + upgraders.length + ' / ' + varConstants.UPGRADER_MIN + '</font>' +
+        ' | ' + '<font color="#464CC5">Builders :  </font><font color="white"> ' + builders.length + ' / ' + varConstants.BUILDER_MIN) + '</font>';
+                
+   /* console.log('Upgraders :  ' + upgraders.length + ' / ' + varConstants.UPGRADER_MIN); */
+   /* console.log('Builders :  ' + builders.length + ' / ' + varConstants.BUILDER_MIN); */
+    console.log('Spawn Energy : ' + spawnEnergy + '/' + Game.spawns['Spawn1'].energyCapacity);
+    console.log('Total Energy : ' + allEnergyAvailable); 
 
     /* TOWER OPERATION - START */
     
-    var tower = Game.getObjectById('a1cd17bbd04928fd88e0ef96')
+    var tower = Game.getObjectById('103f1c91b5ce9ff')
     if (tower) {
         
         var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS)
         if (closestHostile) {
             tower.attack(closestHostile)
         }
-
+        
+        var closestHurt = tower.pos.findClosestByRange(FIND_CREEPS, {
+            filter: (creep) => creep.hits < creep.hitsMax 
+        });
+        if (closestHurt) {
+            tower.heal(closestHurt)
+        }
+            
         var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: (structure) => structure.hits < structure.hitsMax
         });
         if (closestDamagedStructure) {
             tower.repair(closestDamagedStructure)
         }
-
-
         
     }
 
