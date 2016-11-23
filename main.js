@@ -51,8 +51,16 @@ module.exports.loop = function() {
     console.log('Builders :  ' + builders.length + ' / ' + varConstants.BUILDER_MIN)
     console.log('Spawn Energy : ' + spawnEnergy + '/' + Game.spawns['Spawn1'].energyCapacity + ' Total Energy : ' + Room.energyCapacity)
 
+
+    /* TOWER OPERATION - START */
+    
     var tower = Game.getObjectById('a1cd17bbd04928fd88e0ef96')
     if (tower) {
+        
+        var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS)
+        if (closestHostile) {
+            tower.attack(closestHostile)
+        }
 
         var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: (structure) => structure.hits < structure.hitsMax
@@ -62,11 +70,10 @@ module.exports.loop = function() {
         }
 
 
-        var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS)
-        if (closestHostile) {
-            tower.attack(closestHostile)
-        }
+        
     }
+
+    /* TOWER OPERATION - END */
 
     for (var name in Game.creeps) {
         var creep = Game.creeps[name];
